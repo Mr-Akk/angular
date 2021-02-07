@@ -1,0 +1,76 @@
+<div class="table-head">
+  <div class="table-head">Flight Reports</div>
+</div>
+<div *ngIf="showFilter;" [@fadeInOut]>
+<div class="filters">
+  <div class="filter">
+    <mat-form-field>
+      <mat-label>Flight No</mat-label>
+      <input type="number" matInput [(ngModel)]="filterFlightNo" />
+    </mat-form-field>
+  </div>
+  <div class="filter">
+    <mat-form-field>
+      <mat-label>Leg No</mat-label>
+      <input type="number" matInput [(ngModel)]="filterLegNo" />
+    </mat-form-field>
+  </div>
+  <div class="filter">
+    <mat-form-field>
+      <mat-label>Origin</mat-label>
+      <input type="text" matInput #inputOrigin [value]="inputOrigin.value.toUpperCase()" [(ngModel)]="filterOrigin" placeholder="Ex. MAA" />
+    </mat-form-field>
+  </div>
+  <div class="filter">
+    <mat-form-field>
+      <mat-label>Destination</mat-label>
+      <input type="text" matInput #inputDest [value]="inputDest.value.toUpperCase()" [(ngModel)]="filterDestination" placeholder="Ex. PNY" />
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="filters">
+  <div class="filter">
+    <mat-form-field appearance="legacy" color="accent">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="dpStartDate" [(ngModel)]="filterStartDate">
+      <mat-datepicker-toggle matSuffix [for]="dpStartDate"></mat-datepicker-toggle>
+      <mat-datepicker #dpStartDate disabled="false"></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="filter">
+    <mat-form-field appearance="legacy" color="accent">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="dpEndDate" [(ngModel)]="filterEndDate">
+      <mat-datepicker-toggle matSuffix [for]="dpEndDate"></mat-datepicker-toggle>
+      <mat-datepicker #dpEndDate disabled="false"></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="filter-btn">
+    <button mat-raised-button color="warn" (click)="resetFilter()">Reset</button>
+  </div>
+  <div class="filter-btn">
+      <button mat-raised-button color="accent" (click)="initTable1Data()">Apply</button>
+  </div>
+</div>
+</div>
+<mat-tab-group #tabGroup mat-align-tabs="start" (selectedTabChange)="tabChanged($event.index)">
+  <mat-tab label="Released">
+    <app-FlightReleasedTable 
+      [(dataSource)]="dataSource[0]"
+      [(rfisTableDataLoading)]="isTableDataLoading[0]" 
+      [(rfisTableDataValid)]="isTableDataValid[0]"
+      [rfrowPerPage] = "rowPerPage"
+      >
+    </app-FlightReleasedTable>
+  </mat-tab>
+  <mat-tab label="Scheduled">
+    <app-FlightScheduledTable
+    [(dataSource)]="dataSource[1]"
+    [(sfisTableDataLoading)]="isTableDataLoading[1]" 
+    [(sfisTableDataValid)]="isTableDataValid[1]"
+    [sfrowPerPage] = "rowPerPage" 
+    >
+    </app-FlightScheduledTable>
+  </mat-tab>
+</mat-tab-group>

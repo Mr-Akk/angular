@@ -1,0 +1,14 @@
+<div class="bar-chart">
+  <div *ngIf="showChart; then thenBlock"></div>
+  <ng-template #thenBlock>
+    <canvas baseChart 
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [chartType]="barChartType"
+      [colors]="chartColors"
+      >
+    </canvas>
+  </ng-template>
+</div>
